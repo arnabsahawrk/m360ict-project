@@ -5,12 +5,12 @@ import router from "./routes/Routes";
 import { HelmetProvider } from "react-helmet-async";
 import "./index.css";
 import { ApiProvider } from "@reduxjs/toolkit/query/react";
-import { apiSlice } from "./features/api/apiSlice";
+import { productsApiSlice } from "./features/api/productsApiSlice";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <HelmetProvider>
-      <ApiProvider api={apiSlice}>
+      <ApiProvider api={productsApiSlice}>
         <RouterProvider router={router} />
       </ApiProvider>
     </HelmetProvider>

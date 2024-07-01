@@ -1,6 +1,6 @@
 import { Table, Button, Input, Space } from "antd";
 import type { InputRef } from "antd";
-import { useGetProductsQuery } from "../features/api/apiSlice";
+import { useGetProductsQuery } from "../features/api/productsApiSlice";
 import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import type { FilterDropdownProps } from "antd/es/table/interface";
@@ -160,7 +160,11 @@ const TableComponent = () => {
     {
       title: "Details",
       render: (record: object) => (
-        <Button onClick={() => navigate(`/product/${record.id}`)}>
+        <Button
+          onClick={() => navigate(`/product/${record.id}`)}
+          type="primary"
+          size="small"
+        >
           View Details
         </Button>
       ),

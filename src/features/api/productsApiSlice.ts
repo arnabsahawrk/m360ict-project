@@ -7,17 +7,23 @@ interface ProductsResponse {
   limit: number;
 }
 
-export const apiSlice = createApi({
+export const productsApiSlice = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({ baseUrl: "https://dummyjson.com" }),
   endpoints: (builder) => ({
+    //all products api
     getProducts: builder.query<
       ProductsResponse,
       { limit: number; skip: number }
     >({
       query: ({ limit, skip }) => `/products?limit=${limit}&skip=${skip}`,
     }),
+    //single products api
+    getProductDetails: builder.query<object, void>({
+      query: (id) => `/products/${id}`,
+    }),
   }),
 });
 
-export const { useGetProductsQuery } = apiSlice;
+export const { useGetProductsQuery, useGetProductDetailsQuery } =
+  productsApiSlice;
