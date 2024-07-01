@@ -24,10 +24,12 @@ const TableComponent = () => {
     {
       title: "Price",
       dataIndex: "price",
+      sorter: (a, b) => a.price - b.price,
     },
     {
       title: "Rating",
       dataIndex: "rating",
+      sorter: (a, b) => a.rating - b.rating,
     },
     {
       title: "Brand",
@@ -36,6 +38,7 @@ const TableComponent = () => {
     {
       title: "Stock",
       dataIndex: "stock",
+      sorter: (a, b) => a.stock - b.stock,
     },
     {
       title: "Details",
