@@ -15,9 +15,11 @@ const getActiveColors = (colors: string[]) =>
 
 interface ProductDetailsComponent {
   product: Product;
+  setCartCount: React.Dispatch<React.SetStateAction<string>>;
 }
 const ProductDetailsComponent: React.FC<ProductDetailsComponent> = ({
   product,
+  setCartCount,
 }) => {
   const {
     title,
@@ -31,6 +33,18 @@ const ProductDetailsComponent: React.FC<ProductDetailsComponent> = ({
     thumbnail,
     reviews,
   } = product;
+
+  //cart item increasing
+  const handleAddToCart = () => {
+    let cartCount = localStorage.getItem("cartCount");
+    if (cartCount) {
+      cartCount = (parseInt(cartCount, 10) + 1).toString();
+    } else {
+      cartCount = "1";
+    }
+    localStorage.setItem("cartCount", cartCount);
+    setCartCount(cartCount);
+  };
 
   return (
     <div>
@@ -126,6 +140,7 @@ const ProductDetailsComponent: React.FC<ProductDetailsComponent> = ({
             </ConfigProvider>
             {/* Add to Cart  */}
             <Button
+              onClick={handleAddToCart}
               type="primary"
               size="large"
               icon={<ShoppingCartOutlined />}

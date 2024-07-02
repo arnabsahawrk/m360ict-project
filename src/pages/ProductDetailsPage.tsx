@@ -5,7 +5,8 @@ import Container from "../components/common/Container";
 import ProductDetailsComponent from "../components/ProductDetailsComponent";
 import { Product } from "../types/types";
 import { Button } from "antd";
-import { EditOutlined } from "@ant-design/icons";
+import { EditOutlined, ShoppingCartOutlined } from "@ant-design/icons";
+import { useState } from "react";
 
 interface queryProduct {
   data: Product;
@@ -15,6 +16,10 @@ interface queryProduct {
 const ProductDetailsPage = () => {
   const { id } = useParams<{ id: string }>();
   const { data, isLoading } = useGetProductDetailsQuery<queryProduct>(id || "");
+  //Cart Count from local storage
+  const [cartCount, setCartCount] = useState<string>(
+    localStorage.getItem("cartCount") || "0"
+  );
 
   if (isLoading)
     return (
@@ -36,19 +41,25 @@ const ProductDetailsPage = () => {
         >
           Home
         </Link>
-        {/* Edit Button  */}
-        <Button
-          type="primary"
-          shape="round"
-          icon={<EditOutlined />}
-          size="middle"
-        >
-          Edit
-        </Button>
+        {/* Edit and Cart Button  */}
+        <div className="flex gap-2 items-center">
+          <Button
+            type="primary"
+            shape="round"
+            icon={<EditOutlined />}
+            size="middle"
+          >
+            Edit
+          </Button>
+          <p className="text-xl space-x-1">
+            <ShoppingCartOutlined />
+            <sup>{parseInt(cartCount, 10)}</sup>
+          </p>
+        </div>
       </nav>
       {/* Details Component */}
       <Container>
-        <ProductDetailsComponent product={data} />
+        <ProductDetailsComponent product={data} setCartCount={setCartCount} />
       </Container>
     </section>
   );
