@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useGetProductDetailsQuery } from "../features/api/productsApiSlice";
 import { Skeleton } from "antd";
 import Container from "../components/common/Container";
@@ -26,7 +26,15 @@ const ProductDetailsPage = () => {
     );
   return (
     <section>
-      <nav className="p-4 bg-slate-200 text-right">
+      <nav className="p-4 bg-slate-200 flex justify-between items-center">
+        <h1 className="text-2xl font-bold">M360ICT</h1>
+        <Link
+          className="hover:text-blue-600 tracking-widest font-medium"
+          to="/"
+        >
+          Home
+        </Link>
+        {/* Edit Button  */}
         <Button
           type="primary"
           shape="round"
@@ -36,6 +44,7 @@ const ProductDetailsPage = () => {
           Edit
         </Button>
       </nav>
+      {/* Details Component */}
       <Container>
         <ProductDetailsComponent product={data} />
       </Container>
