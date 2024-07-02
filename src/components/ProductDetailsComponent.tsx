@@ -28,7 +28,6 @@ const ProductDetailsComponent: React.FC<ProductDetailsComponent> = ({
     stock,
     brand,
     warrantyInformation,
-    reviews,
     thumbnail,
   } = product;
 
