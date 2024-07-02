@@ -6,12 +6,17 @@ import { useNavigate } from "react-router-dom";
 import { FilterDropdownProps } from "antd/es/table/interface";
 import { SearchOutlined } from "@ant-design/icons";
 import Highlighter from "react-highlight-words";
-import { Product } from "../types/types";
+import { Product, ProductsResponse } from "../types/types";
+
+interface queryProducts {
+  data: ProductsResponse;
+  isLoading: boolean;
+}
 
 const TableComponent = () => {
   const [page, setPage] = useState<number>(1);
   const [pageSize, setPageSize] = useState<number>(10);
-  const { data, isLoading } = useGetProductsQuery({
+  const { data, isLoading } = useGetProductsQuery<queryProducts>({
     limit: pageSize,
     skip: (page - 1) * pageSize,
   });
@@ -164,7 +169,6 @@ const TableComponent = () => {
       sorter: (a: Product, b: Product) => a.stock - b.stock,
     },
     {
-      title: "Details",
       render: (record: Product) => (
         <Button
           onClick={() => navigate(`/product/${record.id}`)}
