@@ -27,7 +27,9 @@ const ProductDetailsPage = () => {
   return (
     <section>
       <nav className="p-4 bg-slate-200 flex justify-between items-center">
-        <h1 className="text-2xl font-bold">M360ICT</h1>
+        <h1 className="text-2xl font-bold">
+          <Link to="/">M360ICT</Link>
+        </h1>
         <Link
           className="hover:text-blue-600 tracking-widest font-medium"
           to="/"
