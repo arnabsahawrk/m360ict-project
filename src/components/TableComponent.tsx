@@ -1,15 +1,16 @@
 import { Table, Button, Input, Space } from "antd";
-import type { InputRef } from "antd";
 import { useGetProductsQuery } from "../features/api/productsApiSlice";
 import { useState, useRef } from "react";
+import type { InputRef, TableColumnType } from "antd";
 import { useNavigate } from "react-router-dom";
-import type { FilterDropdownProps } from "antd/es/table/interface";
+import { FilterDropdownProps } from "antd/es/table/interface";
 import { SearchOutlined } from "@ant-design/icons";
 import Highlighter from "react-highlight-words";
+import { Product } from "../types/types";
 
 const TableComponent = () => {
-  const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
+  const [page, setPage] = useState<number>(1);
+  const [pageSize, setPageSize] = useState<number>(10);
   const { data, isLoading } = useGetProductsQuery({
     limit: pageSize,
     skip: (page - 1) * pageSize,
@@ -19,10 +20,12 @@ const TableComponent = () => {
   const searchInput = useRef<InputRef>(null);
   const navigate = useNavigate();
 
+  //filter option
+  type DataIndex = keyof Product;
   const handleSearch = (
     selectedKeys: string[],
     confirm: FilterDropdownProps["confirm"],
-    dataIndex: string
+    dataIndex: DataIndex
   ) => {
     confirm();
     setSearchText(selectedKeys[0]);
@@ -34,7 +37,9 @@ const TableComponent = () => {
     setSearchText("");
   };
 
-  const getColumnSearchProps = (dataIndex: string) => ({
+  const getColumnSearchProps = (
+    dataIndex: DataIndex
+  ): TableColumnType<Product> => ({
     filterDropdown: ({
       setSelectedKeys,
       selectedKeys,
@@ -123,6 +128,7 @@ const TableComponent = () => {
       ),
   });
 
+  //table columns
   const columns = [
     {
       title: "Name",
@@ -139,12 +145,12 @@ const TableComponent = () => {
     {
       title: "Price",
       dataIndex: "price",
-      sorter: (a, b) => a.price - b.price,
+      sorter: (a: Product, b: Product) => a.price - b.price,
     },
     {
       title: "Rating",
       dataIndex: "rating",
-      sorter: (a, b) => a.rating - b.rating,
+      sorter: (a: Product, b: Product) => a.rating - b.rating,
     },
     {
       title: "Brand",
@@ -155,11 +161,11 @@ const TableComponent = () => {
     {
       title: "Stock",
       dataIndex: "stock",
-      sorter: (a, b) => a.stock - b.stock,
+      sorter: (a: Product, b: Product) => a.stock - b.stock,
     },
     {
       title: "Details",
-      render: (record: object) => (
+      render: (record: Product) => (
         <Button
           onClick={() => navigate(`/product/${record.id}`)}
           type="primary"
@@ -181,9 +187,11 @@ const TableComponent = () => {
         current: page,
         pageSize: pageSize,
         total: data?.total,
-        onChange: (page, pageSize) => {
+        onChange: (page: number, pageSize?: number) => {
           setPage(page);
-          setPageSize(pageSize);
+          if (pageSize) {
+            setPageSize(pageSize);
+          }
         },
       }}
     />
