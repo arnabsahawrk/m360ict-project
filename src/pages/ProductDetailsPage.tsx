@@ -4,9 +4,9 @@ import { Skeleton } from "antd";
 import Container from "../components/common/Container";
 import ProductDetailsComponent from "../components/ProductDetailsComponent";
 import { Product } from "../types/types";
-import { Button } from "antd";
-import { EditOutlined, ShoppingCartOutlined } from "@ant-design/icons";
+import { ShoppingCartOutlined } from "@ant-design/icons";
 import { useState } from "react";
+import UpdateProductModal from "../components/modals/UpdateProductModal";
 
 interface queryProduct {
   data: Product;
@@ -21,7 +21,7 @@ const ProductDetailsPage = () => {
     localStorage.getItem("cartCount") || "0"
   );
 
-  if (isLoading)
+  if (isLoading) {
     return (
       <>
         {Array.from({ length: 5 }).map((_, i) => (
@@ -29,6 +29,7 @@ const ProductDetailsPage = () => {
         ))}
       </>
     );
+  }
   return (
     <section>
       <nav className="p-4 bg-slate-200 flex justify-between items-center">
@@ -43,14 +44,9 @@ const ProductDetailsPage = () => {
         </Link>
         {/* Edit and Cart Button  */}
         <div className="flex gap-2 items-center">
-          <Button
-            type="primary"
-            shape="round"
-            icon={<EditOutlined />}
-            size="middle"
-          >
-            Edit
-          </Button>
+          {/* Update Modal  */}
+          <UpdateProductModal product={data} />
+          {/* Cart  */}
           <p className="text-xl space-x-1">
             <ShoppingCartOutlined />
             <sup>{parseInt(cartCount, 10)}</sup>

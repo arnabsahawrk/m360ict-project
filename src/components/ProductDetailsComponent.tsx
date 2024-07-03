@@ -47,7 +47,7 @@ const ProductDetailsComponent: React.FC<ProductDetailsComponent> = ({
   };
 
   return (
-    <div>
+    <div className="pb-10">
       <div className="flex flex-col lg:flex-row gap-4 py-10">
         <img className="size-96" src={thumbnail} alt={title} />
         <div className="space-y-2">
@@ -152,6 +152,7 @@ const ProductDetailsComponent: React.FC<ProductDetailsComponent> = ({
         </div>
       </div>
       {/* Review component  */}
+      <p className="font-bold underline text-xl mb-5 text-center">Reviews</p>
       <div className="flex flex-wrap justify-center items-center gap-4">
         {reviews.map((review, index) => (
           <div
