@@ -7,6 +7,7 @@ import { Product } from "../types/types";
 import { ShoppingCartOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import UpdateProductModal from "../components/modals/UpdateProductModal";
+import PageTitle from "../components/common/PageTitle";
 
 interface queryProduct {
   data: Product;
@@ -31,33 +32,36 @@ const ProductDetailsPage = () => {
     );
   }
   return (
-    <section>
-      <nav className="p-4 bg-slate-200 flex justify-between items-center">
-        <h1 className="text-2xl font-bold">
-          <Link to="/">M360ICT</Link>
-        </h1>
-        <Link
-          className="hover:text-blue-600 tracking-widest font-medium"
-          to="/"
-        >
-          Home
-        </Link>
-        {/* Edit and Cart Button  */}
-        <div className="flex gap-2 items-center">
-          {/* Update Modal  */}
-          <UpdateProductModal product={data} />
-          {/* Cart  */}
-          <p className="text-xl space-x-1">
-            <ShoppingCartOutlined />
-            <sup>{parseInt(cartCount, 10)}</sup>
-          </p>
-        </div>
-      </nav>
-      {/* Details Component */}
-      <Container>
-        <ProductDetailsComponent product={data} setCartCount={setCartCount} />
-      </Container>
-    </section>
+    <>
+      <PageTitle title={data.title} />
+      <section>
+        <nav className="p-4 bg-slate-200 flex justify-between items-center">
+          <h1 className="text-2xl font-bold">
+            <Link to="/">M360ICT</Link>
+          </h1>
+          <Link
+            className="hover:text-blue-600 tracking-widest font-medium"
+            to="/"
+          >
+            Home
+          </Link>
+          {/* Edit and Cart Button  */}
+          <div className="flex gap-2 items-center">
+            {/* Update Modal  */}
+            <UpdateProductModal product={data} />
+            {/* Cart  */}
+            <p className="text-xl space-x-1">
+              <ShoppingCartOutlined />
+              <sup>{parseInt(cartCount, 10)}</sup>
+            </p>
+          </div>
+        </nav>
+        {/* Details Component */}
+        <Container>
+          <ProductDetailsComponent product={data} setCartCount={setCartCount} />
+        </Container>
+      </section>
+    </>
   );
 };
 
