@@ -5,6 +5,7 @@ import { Button, ConfigProvider, Image, Space } from "antd";
 import ReactStarsRating from "react-awesome-stars-rating";
 import { ShoppingCartOutlined } from "@ant-design/icons";
 import DeleteReviewModal from "./modals/DeleteReviewModal";
+import AddReviewModal from "./modals/AddReviewModal";
 
 const colors1 = ["#6253E1", "#04BEFE"];
 const colors2 = ["#fc6076", "#ff9a44", "#ef9d43", "#e75516"];
@@ -153,7 +154,11 @@ const ProductDetailsComponent: React.FC<ProductDetailsComponent> = ({
         </div>
       </div>
       {/* Review component  */}
-      <p className="font-bold underline text-xl mb-5 text-center">Reviews</p>
+      <div className="flex justify-center items-center gap-2 mb-5">
+        {/* Add Review  */}
+        <p className="font-bold underline text-xl">Reviews</p>
+        <AddReviewModal reviews={reviews} />
+      </div>
       <div className="flex flex-wrap justify-center items-center gap-4">
         {reviews.map((review, index) => (
           <div

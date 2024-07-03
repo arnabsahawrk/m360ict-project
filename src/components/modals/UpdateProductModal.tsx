@@ -1,5 +1,14 @@
 import React, { useState } from "react";
-import { Button, Modal, Form, Input, Select, Spin, message } from "antd";
+import {
+  Button,
+  Modal,
+  Form,
+  Input,
+  Select,
+  Spin,
+  message,
+  Tooltip,
+} from "antd";
 import { EditOutlined } from "@ant-design/icons";
 import { Category, Product } from "../../types/types";
 import TextArea from "antd/es/input/TextArea";
@@ -72,15 +81,17 @@ const UpdateProductModal: React.FC<UpdateProductModalProps> = ({ product }) => {
 
   return (
     <>
-      <Button
-        onClick={() => setOpen(true)}
-        type="primary"
-        shape="round"
-        icon={<EditOutlined />}
-        size="middle"
-      >
-        Edit
-      </Button>
+      <Tooltip title="Update Product">
+        <Button
+          onClick={() => setOpen(true)}
+          type="primary"
+          shape="round"
+          icon={<EditOutlined />}
+          size="middle"
+        >
+          Edit
+        </Button>
+      </Tooltip>
 
       <Modal
         title="Update Product"
