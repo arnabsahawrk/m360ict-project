@@ -4,6 +4,7 @@ import { TinyColor } from "@ctrl/tinycolor";
 import { Button, ConfigProvider, Space } from "antd";
 import ReactStarsRating from "react-awesome-stars-rating";
 import { ShoppingCartOutlined } from "@ant-design/icons";
+import DeleteReviewModal from "./modals/DeleteReviewModal";
 
 const colors1 = ["#6253E1", "#04BEFE"];
 const colors2 = ["#fc6076", "#ff9a44", "#ef9d43", "#e75516"];
@@ -157,7 +158,7 @@ const ProductDetailsComponent: React.FC<ProductDetailsComponent> = ({
         {reviews.map((review, index) => (
           <div
             key={index}
-            className="border border-blue-300 w-full max-w-md overflow-hidden bg-white rounded-lg shadow-lg p-4 md:p-4"
+            className="border border-blue-300 w-full max-w-md bg-white rounded-lg shadow-lg p-4 md:p-4 relative"
           >
             <h1 className="text-xl font-bold text-gray-800">
               {review.reviewerName}
@@ -175,6 +176,14 @@ const ProductDetailsComponent: React.FC<ProductDetailsComponent> = ({
               <p className="text-sm font-bold text-gray-700">
                 {new Date(review.date).toLocaleString()}
               </p>
+            </div>
+            {/* Delete Review Modal  */}
+            <div className="absolute top-0 right-0 -translate-y-4 translate-x-2">
+              <DeleteReviewModal
+                reviews={reviews}
+                index={index}
+                id={product.id}
+              />
             </div>
           </div>
         ))}
