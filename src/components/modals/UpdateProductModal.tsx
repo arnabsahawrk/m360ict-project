@@ -69,8 +69,20 @@ const UpdateProductModal: React.FC<UpdateProductModalProps> = ({ product }) => {
 
   // Form Submit
   const onFinish: FormProps<FieldType>["onFinish"] = async (values) => {
+    const inputValues = {
+      title: values.title,
+      description: values.description,
+      category: values.category,
+      price: parseInt(values.price.toString(), 10),
+      rating: parseInt(values.rating.toString(), 10),
+      stock: parseInt(values.stock.toString(), 10),
+      brand: values.brand,
+      warrantyInformation: values.warrantyInformation,
+      thumbnail: values.thumbnail,
+    };
+
     try {
-      await updateProduct({ id: product.id, updateData: values });
+      await updateProduct({ id: product.id, updateData: inputValues });
       message.success("Product updated successfully!");
       setOpen(false);
     } catch (error) {
@@ -161,7 +173,7 @@ const UpdateProductModal: React.FC<UpdateProductModalProps> = ({ product }) => {
             initialValue={rating}
             rules={[{ required: true, message: "Rating Is Required" }]}
           >
-            <Input placeholder="Product Rating" type="number" />
+            <Input placeholder="Product Rating" type="number" min={1} max={5} />
           </Form.Item>
           {/* Warranty  */}
           <Form.Item

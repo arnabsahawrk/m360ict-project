@@ -157,7 +157,7 @@ const ProductDetailsComponent: React.FC<ProductDetailsComponent> = ({
       <div className="flex justify-center items-center gap-2 mb-5">
         {/* Add Review  */}
         <p className="font-bold underline text-xl">Reviews</p>
-        <AddReviewModal reviews={reviews} />
+        <AddReviewModal reviews={reviews} id={product.id} />
       </div>
       <div className="flex flex-wrap justify-center items-center gap-4">
         {reviews.map((review, index) => (

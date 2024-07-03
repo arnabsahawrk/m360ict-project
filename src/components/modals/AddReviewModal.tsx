@@ -3,25 +3,67 @@ import { Button, Flex, Form, Input, Modal, Spin, Tooltip, message } from "antd";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import { Review } from "../../types/types";
 import { useUpdateProductMutation } from "../../features/api/productsApiSlice";
+import type { FormProps } from "antd";
 
 interface AddReviewModalProps {
   reviews: Review[];
+  id: number;
 }
 
-const AddReviewModal: React.FC<AddReviewModalProps> = ({ reviews }) => {
+type Comments = {
+  rating: number;
+  comment: string;
+};
+
+type FieldType = {
+  rating: number;
+  comment: string;
+  reviewerName: string;
+  reviewerEmail: string;
+  comments: Comments[];
+};
+
+const AddReviewModal: React.FC<AddReviewModalProps> = ({
+  reviews: allReviews,
+  id,
+}) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [updateProduct, { isLoading }] = useUpdateProductMutation();
 
-  const onFinish = async () => {
-    // const remainReview = allReviews.filter((_, idx) => index !== idx);
-    // try {
-    //   await updateProduct({ id, updateData: { reviews: remainReview } });
-    //   message.success("Review deleted successfully!");
-    //   setIsModalOpen(false);
-    // } catch (error) {
-    //   message.error("Failed to delete. Please try again.");
-    //   console.log(error);
-    // }
+  const onFinish: FormProps<FieldType>["onFinish"] = async (values) => {
+    const reviewInput = {
+      rating: parseInt(values.rating.toString(), 10),
+      comment: values.comment,
+      date: new Date().toISOString(),
+      reviewerName: values.reviewerName,
+      reviewerEmail: values.reviewerEmail,
+    };
+
+    const addedAllReviews = [...allReviews, reviewInput];
+
+    //more comments
+    if (values.comments?.length) {
+      const moreComment = values.comments.map((comment) => {
+        return {
+          reviewerName: reviewInput.reviewerName,
+          reviewerEmail: reviewInput.reviewerEmail,
+          date: reviewInput.date,
+          rating: parseInt(comment.rating.toString(), 10),
+          comment: comment.comment,
+        };
+      });
+
+      addedAllReviews.push(...moreComment);
+    }
+
+    try {
+      await updateProduct({ id, updateData: { reviews: addedAllReviews } });
+      message.success("Review added successfully!");
+      setIsModalOpen(false);
+    } catch (error) {
+      message.error("Failed to add review. Please try again.");
+      console.log(error);
+    }
   };
 
   return (
@@ -56,7 +98,7 @@ const AddReviewModal: React.FC<AddReviewModalProps> = ({ reviews }) => {
             name="reviewerEmail"
             rules={[{ required: true, message: "Email Is Required" }]}
           >
-            <Input placeholder="Your Email" />
+            <Input placeholder="Your Email" type="email" />
           </Form.Item>
           {/* Rating */}
           <Form.Item
@@ -64,7 +106,7 @@ const AddReviewModal: React.FC<AddReviewModalProps> = ({ reviews }) => {
             name="rating"
             rules={[{ required: true, message: "Rating Is Required" }]}
           >
-            <Input placeholder="Rating" type="number" />
+            <Input placeholder="Rating" type="number" min={1} max={5} />
           </Form.Item>
           {/* Comment */}
           <Form.Item
@@ -93,7 +135,12 @@ const AddReviewModal: React.FC<AddReviewModalProps> = ({ reviews }) => {
                           { required: true, message: "Rating Is Required" },
                         ]}
                       >
-                        <Input placeholder="Rating" type="number" />
+                        <Input
+                          placeholder="Rating"
+                          type="number"
+                          min={1}
+                          max={5}
+                        />
                       </Form.Item>
                       {/* Dynamic Comment  */}
                       <Form.Item
