@@ -1,7 +1,7 @@
 import React from "react";
 import { Product } from "../types/types";
 import { TinyColor } from "@ctrl/tinycolor";
-import { Button, ConfigProvider, Space } from "antd";
+import { Button, ConfigProvider, Image, Space } from "antd";
 import ReactStarsRating from "react-awesome-stars-rating";
 import { ShoppingCartOutlined } from "@ant-design/icons";
 import DeleteReviewModal from "./modals/DeleteReviewModal";
@@ -50,7 +50,7 @@ const ProductDetailsComponent: React.FC<ProductDetailsComponent> = ({
   return (
     <div className="pb-10">
       <div className="flex flex-col lg:flex-row gap-4 py-10">
-        <img className="size-96" src={thumbnail} alt={title} />
+        <Image width={384} height={384} src={thumbnail} alt={title} />
         <div className="space-y-2">
           <h1 className="text-3xl font-bold">{title}</h1>
           <p className="italic">{description}</p>

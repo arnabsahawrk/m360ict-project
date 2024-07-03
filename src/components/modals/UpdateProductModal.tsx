@@ -37,7 +37,7 @@ const UpdateProductModal: React.FC<UpdateProductModalProps> = ({ product }) => {
     useUpdateProductMutation();
 
   //after updating the product data
-  console.log("Updated Product Data: ", result || "Not Update Anything Yet");
+  if (result) console.log("Updated Product Data: ", result);
 
   const {
     title,
