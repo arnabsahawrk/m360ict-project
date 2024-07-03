@@ -173,7 +173,13 @@ const UpdateProductModal: React.FC<UpdateProductModalProps> = ({ product }) => {
             initialValue={rating}
             rules={[{ required: true, message: "Rating Is Required" }]}
           >
-            <Input placeholder="Product Rating" type="number" min={1} max={5} />
+            <Input
+              placeholder="Product Rating"
+              type="number"
+              min={1}
+              max={5}
+              step="0.01"
+            />
           </Form.Item>
           {/* Warranty  */}
           <Form.Item

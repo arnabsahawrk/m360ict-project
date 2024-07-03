@@ -106,7 +106,13 @@ const AddReviewModal: React.FC<AddReviewModalProps> = ({
             name="rating"
             rules={[{ required: true, message: "Rating Is Required" }]}
           >
-            <Input placeholder="Rating" type="number" min={1} max={5} />
+            <Input
+              placeholder="Rating"
+              type="number"
+              min={1}
+              max={5}
+              step="0.01"
+            />
           </Form.Item>
           {/* Comment */}
           <Form.Item
@@ -140,6 +146,7 @@ const AddReviewModal: React.FC<AddReviewModalProps> = ({
                           type="number"
                           min={1}
                           max={5}
+                          step="0.01"
                         />
                       </Form.Item>
                       {/* Dynamic Comment  */}
